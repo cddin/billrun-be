@@ -14,7 +14,7 @@
  */
 abstract class ApiAction extends Action_Base {
 
-	protected $opencors = false;
+	protected $opencors = true;
 
 	/**
 	 * initialize API action (run on constructor)

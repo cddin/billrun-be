@@ -52,7 +52,13 @@ abstract class BillapiController extends Yaf_Controller_Abstract {
 	 */
 	protected $settings = array();
 
+	protected $opencors = true;
+
 	public function init() {
+		
+		if ($this->opencors) {
+			Billrun_Utils_Security::openCrossDomain();
+		}
 		Billrun_Util::setHttpSessionTimeout();
 		$request = $this->getRequest();
 		$this->collection = $request->getParam('collection');
