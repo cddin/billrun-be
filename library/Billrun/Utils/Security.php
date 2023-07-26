@@ -174,8 +174,8 @@ class Billrun_Utils_Security {
 			return;
 		}
 		
-		// header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']); // cross domain
-		header('Access-Control-Allow-Origin: *' ); // cross domain
+		header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']); // cross domain
+		// header('Access-Control-Allow-Origin: *' ); // cross domain
 		header('Access-Control-Allow-Methods: GET,POST');
 		header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 		header('Access-Control-Allow-Credentials: true');
