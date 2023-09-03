@@ -49,7 +49,7 @@ class Billrun_Cycle_Data_Plan extends Billrun_Cycle_Data_Line {
 	}
 
 	protected function getLine($chargeingKey, $chargeData) {
-
+		Billrun_Factory::log("-->>getLine{$chargeingKey} - {$chargeData}");
 		$entry = $this->getFlatLine();
 		$entry['aprice'] = $chargeData['value'];
 		$entry['full_price'] = $chargeData['full_price'];
@@ -117,12 +117,14 @@ class Billrun_Cycle_Data_Plan extends Billrun_Cycle_Data_Line {
 	
 	//TODO move this to the account/subscriber lines addition logic and work in batch mode.
 	protected function addTaxationToLine($entry) {
-		Billrun_Factory::log("11111111111{$entry}");
+		Billrun_Factory::log("-->>11111111111{$entry}");
 		$entryWithTax = FALSE;
 		for ($i = 0; $i < 3 && !$entryWithTax; $i++) {//Try 3 times to tax the line.
 			Billrun_Factory::log("222222222222");
 			$taxCalc = Billrun_Calculator::getInstance(array('autoload' => false, 'type' => 'tax'));
+			Billrun_Factory::log("4444444444{$$taxCalc}");
 			$entryWithTax = $taxCalc->updateRow($entry);
+			Billrun_Factory::log("555555555");
 			if (!$entryWithTax) {
 				Billrun_Factory::log("Taxation of {$entry['name']} failed. Retrying...", Zend_Log::WARN);
 				sleep(1);
