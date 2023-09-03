@@ -14,7 +14,7 @@ class AccountInvoicesAction extends ApiAction {
 	public function execute() {
 		$this->allowed();
 		$request = $this->getRequest();
-		
+		Billrun_Factory::log("xxxxxxxxx");
 		try {
 			
 			switch ($request->get('action')) {
