@@ -145,6 +145,9 @@ class AccountInvoicesAction extends ApiAction {
 		$generator->load();
 
 		$pdfPath = $generator->generate();
+
+		Billrun_Factory::log("pdfPath"); //$pdfPath
+		Billrun_Factory::log($pdfPath);
 		
 		$cont = file_get_contents($pdfPath);
 
