@@ -148,6 +148,7 @@ class AccountInvoicesAction extends ApiAction {
 		$pdfPath = $generator->generate();
 		
 		//$cont = file_get_contents($pdfPath);
+		Billrun_Factory::log("aaaaaa");
 
 		$this->redirect('/invoice.html');
 		die;
