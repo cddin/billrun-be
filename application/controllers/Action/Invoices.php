@@ -70,28 +70,6 @@ class AccountInvoicesAction extends ApiAction {
 	}
 
 	public function downloadPDF($request) {
-
-		$params = $request->getRequest();
-		$options = array(
-			'type' => 'expectedinvoice',
-			'aid' => $params['aid'],
-			'stamp' => $params['billrun_key'],
-		);
-		if (!empty($params['invoicing_day'])) {
-			$options['invoicing_day'] = $params['invoicing_day'];
-		}
-		$generator = Billrun_Generator::getInstance($options);
-		
-		$generator->load();
-
-		$pdfPath = $generator->generate();
-		
-		//$cont = file_get_contents($pdfPath);
-
-		$this->redirect('/invoice.html');
-		die;
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		
 		if ($request instanceof Yaf_Request_Abstract) {
 			$aid = $request->get('aid');
 			$confirmedOnly = $request->get('confirmed_only');
@@ -105,7 +83,7 @@ class AccountInvoicesAction extends ApiAction {
 			$invoiceId = $request['iid'] ?? '';
 			$detailed = $request['detailed'] ?? false;
 		}
-	
+		
 		$query = array(
 			'aid' => (int) $aid,
 			'billrun_key' => $billrun_key
