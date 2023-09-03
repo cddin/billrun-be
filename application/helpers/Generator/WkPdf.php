@@ -18,7 +18,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 	protected $accountsToInvoice = FALSE;
 	protected $filePermissions = 0666;
 	protected $invoice_threshold = 0.005;
-	protected $render_usage_details = TRUE;
+	protected $render_usage_details = FALSE;
 	protected $render_subscription_details = TRUE;
 	protected $linesColl;
 	protected $plansColl;
@@ -123,7 +123,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		//only generate bills that are 0.01 and above.
 		$this->invoice_threshold = Billrun_Util::getFieldVal($options['generator']['minimum_amount'], 0.005);
 		$this->font_awesome_css_path = APPLICATION_PATH . '/public/css/font-awesome.css';
-		//$this->render_usage_details = Billrun_Util::getFieldVal($options['usage_details'], Billrun_Factory::config()->getConfigValue(self::$type . '.default_print_usage_details', FALSE));
+		$this->render_usage_details = Billrun_Util::getFieldVal($options['usage_details'], Billrun_Factory::config()->getConfigValue(self::$type . '.default_print_usage_details', FALSE));
 		$this->render_subscription_details = Billrun_Util::getFieldVal($options['subscription_details'], Billrun_Factory::config()->getConfigValue(self::$type . '.default_print_subscription_details', TRUE));
 		$this->tanent_css = $this->buildTanentCss(Billrun_Factory::config()->getConfigValue(self::$type . '.invoice_tanent_css', ''));
 		$this->is_fake_generation = Billrun_Util::getFieldVal($options['is_fake'],FALSE);
@@ -176,9 +176,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 	 */
 
 	public function generate($lines = FALSE) {
-		
 		$this->prepereView();
-		
 		$customizedFileName = 0;
                 if(!empty($fileNameConfig = $this->getFileNameConfig())){
                     $customizedFileName = 1;
@@ -188,7 +186,6 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                 }
 		foreach ($this->billrun_data as $object) {
 		    $defaultFileName = $object['billrun_key'] . "_" . $object['aid'] . "_" . $object['invoice_id'] . ".pdf";
-			
                     if($customizedFileName){
                         $fileName = $this->getFileName($object, $fileNameConfig, $defaultFileName);
                     }else{
@@ -201,9 +198,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                             $this->setBillrunExportPath($object, $paths);
                 	}
 		     }
-			
 			if (isset($object['invoice_id'])) {
-				
 				$this->generateAccountInvoices($object, $lines);
 			}
 		}
@@ -378,8 +373,6 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                 }
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
-		
-		$pubroot = '/var/www/billrun/public/invoice.html';
 
 		$this->accountSpecificViewParams($account);
 		
@@ -387,18 +380,15 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		Generator_Translations::setLanguage(isset($account['attributes']['invoice_language'])? $account['attributes']['invoice_language'] : null);
 		
 		$invoice_html =  $this->view->render($this->view_path . 'invoice.phtml');
-
 		Billrun_Factory::dispatcher()->trigger('beforeInvoiceHTMLCommit',array(&$invoice_html,$this,$account));
 		file_put_contents($html, $invoice_html);
 		chmod($html, $this->filePermissions);
-		copy($html, $pubroot);
 		Billrun_Factory::dispatcher()->trigger('afterInvoiceHTMLCommit',array(&$invoice_html,$this,$account));
 
 		$this->updateHtmlDynamicData($account);
-		$ExporterFlagsString = Billrun_Factory::config()->getConfigValue(static::$type.'.exporter_flags','-R 0.1 -L 0 --print-media-type');		
-
-		//Billrun_Factory::log($this->wkpdf_exec);
-		//exec($this->wkpdf_exec . " {$ExporterFlagsString} --header-html {$this->tmp_paths['header']} --footer-html {$this->tmp_paths['footer']} {$html} {$pdf}");
+		$ExporterFlagsString = Billrun_Factory::config()->getConfigValue(static::$type.'.exporter_flags','-R 0.1 -L 0 --print-media-type');
+		Billrun_Factory::log('Generating invoice ' . $pdf_name . " to : $pdf", Zend_Log::INFO);
+		exec($this->wkpdf_exec . " {$ExporterFlagsString} --header-html {$this->tmp_paths['header']} --footer-html {$this->tmp_paths['footer']} {$html} {$pdf}");
 
 		if (Billrun_Factory::config()->getConfigValue(self::$type . '.exclude_pages')) {
 			$firstPage = $this->view_path . 'first_page/main.phtml';
@@ -412,7 +402,6 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 	}
 
 	protected function accountSpecificViewParams($billrunData) {
-
 		$this->view->assign('render_usage_details', $this->render_usage_details);
 		$this->view->assign('render_subscription_details', $this->render_subscription_details);
 		$this->view->assign('render_detailed_quantitative_services', $this->render_detailed_quantitative_services);
@@ -544,7 +533,6 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 	 */
 	public static function getTempDir($stamp) {
 		$tmpdirPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace(' ', '_', static::getCompanyName()) . DIRECTORY_SEPARATOR . $stamp . DIRECTORY_SEPARATOR;
-
 		if (!file_exists($tmpdirPath)) {
 			mkdir($tmpdirPath, 0775, true);
 			chmod($tmpdirPath, 0775);

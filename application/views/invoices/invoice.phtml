@@ -7,7 +7,7 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=1040" />
 		<meta name="MobileOptimized" content="1040" />
-		<link media="all" rel="stylesheet" href='/css/theme/theme1.css' />
+		<link media="all" rel="stylesheet" href=<?php echo $this->css_path ?> />
 		<link rel="stylesheet" href=<?php echo $this->font_awesome_css_path; ?>/>
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,700" rel="stylesheet">
 		<style type="text/css">
@@ -25,10 +25,8 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 		<div class="shell">
 			<div class="container">
 <?php
-		//echo var_dump($this->lines);
 		print $this->render($this->sumup_template);
 		if($render_subscription_details) {
-			
 			$this->createSubscriberInvoiceTables($this->lines, $flat_line_types, $usage_line_types, $details_keys);
 			print $this->render($this->details_template);
 		}
@@ -38,3 +36,4 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 	</div>
 </body>
 </html>
+
