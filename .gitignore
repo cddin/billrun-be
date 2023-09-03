@@ -17,3 +17,4 @@ conf/dori.ini
 shared
 docker/persist
 .vscode/
+.DS_Store
