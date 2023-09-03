@@ -70,7 +70,6 @@ class AccountInvoicesAction extends ApiAction {
 	}
 
 	public function downloadPDF($request) {
-		Billrun_Factory::log("downloadPDF");
 		if ($request instanceof Yaf_Request_Abstract) {
 			$aid = $request->get('aid');
 			$confirmedOnly = $request->get('confirmed_only');
@@ -104,10 +103,7 @@ class AccountInvoicesAction extends ApiAction {
 		$invoiceId = $invoice['invoice_id'];
 		$invoiceData = $invoice->getRawData();
 
-		Billrun_Factory::log("00000000");
-
 		$file_name =  !empty($invoiceData['file_name']) ? $invoiceData['file_name'] : (!empty($invoiceData['invoice_file']) ? basename($invoiceData['invoice_file']) : $billrun_key . '_' . $aid . '_' . $invoiceId . ".pdf");
-		Billrun_Factory::log("1111111111{$file_name");
 		$pdf = $invoiceData['invoice_file'];
 
 		if ($detailed) {
@@ -115,7 +111,6 @@ class AccountInvoicesAction extends ApiAction {
 			$generator->load();
 			$generator->generate();
 		}
-		Billrun_Factory::log("2222222222");
 		if (!file_exists($pdf)){
                         Billrun_Factory::log('Invoice file ' . $pdf . ' does not exist', Zend_Log::NOTICE);
 			echo "Invoice not found";
