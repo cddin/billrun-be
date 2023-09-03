@@ -131,7 +131,7 @@ class AccountInvoicesAction extends ApiAction {
 	}
 	
 	protected function generateExpectedInvoices($request) {
-		Billrun_Factory::log("zzzzzzzzz-generateExpectedInvoices");
+		Billrun_Factory::log("zzzzzzzzz");
 		$params = $request->getRequest();
 		$options = array(
 			'type' => 'expectedinvoice',
@@ -142,15 +142,14 @@ class AccountInvoicesAction extends ApiAction {
 			$options['invoicing_day'] = $params['invoicing_day'];
 		}
 		$generator = Billrun_Generator::getInstance($options);
-		Billrun_Factory::log("aaaaaaaaa-generateExpectedInvoices");
+		
 		$generator->load();
-		Billrun_Factory::log("bbbbbbbbb-generateExpectedInvoices")
+
 		$pdfPath = $generator->generate();
-		Billrun_Factory::log("ccccccccc-generateExpectedInvoices")
+		
 		//$cont = file_get_contents($pdfPath);
 
 		$this->redirect('/invoice.html');
-		Billrun_Factory::log("ddddddddd-generateExpectedInvoices")
 		die;
 		
 		if ($cont) {
