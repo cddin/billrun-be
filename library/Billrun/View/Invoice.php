@@ -283,7 +283,12 @@ class Billrun_View_Invoice extends Yaf_View_Simple {
 		$lines = array_filter($lines, function($line) {
 			return $line['sid'] != 0;
 		});
+
+		$this->invoice_flat_tabels = array(array(array()));
+		$this->invoice_usage_tabels = array(array(array()));
+
 		$this->buildNotCustomTabels($lines, $flatTypes, false, $details_keys);
+
 		if (!empty($tabels_config = $invoice_display['usage_details']['tables'])) {
 			foreach ($lines as $index => $line) {
 				if (in_array($line['type'], $usageTypes)) {
@@ -311,10 +316,13 @@ class Billrun_View_Invoice extends Yaf_View_Simple {
 	}
 
 	public function getTableRow($line, $columns, $details_keys = [], $is_flat_type = false) {
-		$row = [];
+
+		$row = [];	
+
 		$datetime_format = Billrun_Factory::config()->getConfigValue('invoice_export.datetime_format', 'd/m/Y H:i:s');
 		$flippedKeys = array_flip($details_keys);
 		foreach ($columns as $index => $column) {
+			
 			switch ($column['field_name']) {
 				case 'urt':
 					$row['DATE_TIME'] = date($datetime_format, $line['urt']->sec - ($is_flat_type ? 1 : 0));
@@ -336,6 +344,7 @@ class Billrun_View_Invoice extends Yaf_View_Simple {
 					break;
 			}
 		}
+		
 		return $row;
 	}
 
@@ -349,11 +358,15 @@ class Billrun_View_Invoice extends Yaf_View_Simple {
 		$columns = [];
 		foreach ($fields as $label => $field_name) {
 			$columns[] = ['field_name' => $field_name, 'label' => $label];
-		}
+		}		
+	
 		foreach ($lines as $index => $line) {
+
+			$tmparr = array();
 			if (in_array($line['type'], $types)) {
-				if (!$is_usage_types) {
+				if (!$is_usage_types) {				
 					$this->invoice_flat_tabels[$line['sid']][0][] = $this->getTableRow($line, $columns, $details_keys, true);
+					
 				} else {
 					$this->invoice_usage_tabels[$line['sid']][0][] = $this->getTableRow($line, $columns, $details_keys);
 				}
