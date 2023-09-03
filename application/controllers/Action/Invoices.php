@@ -131,7 +131,6 @@ class AccountInvoicesAction extends ApiAction {
 	}
 	
 	protected function generateExpectedInvoices($request) {
-		Billrun_Factory::log("zzzzzzzzz");
 		$params = $request->getRequest();
 		$options = array(
 			'type' => 'expectedinvoice',
@@ -147,11 +146,10 @@ class AccountInvoicesAction extends ApiAction {
 
 		$pdfPath = $generator->generate();
 		
-		//$cont = file_get_contents($pdfPath);
-		Billrun_Factory::log("aaaaaa");
+		$cont = file_get_contents($pdfPath);
 
-		$this->redirect('/invoice.html');
-		die;
+		// $this->redirect('/invoice.html');
+		// die;
 		
 		if ($cont) {
 			header('Content-disposition: inline; filename="'. basename($pdfPath).'"');
