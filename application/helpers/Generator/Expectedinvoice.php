@@ -71,7 +71,7 @@ class Generator_Expectedinvoice extends Billrun_Generator {
 		$generator = Billrun_Aggregator::getInstance($options);
 		$generator->load();
 		if($generator->aggregate()) {
-			return Generator_WkPdf::getTempDir($this->stamp) . "/pdf/{$this->stamp}_{$this->aid}_0.pdf";
+			return Generator_WkPdf::getTempDir($this->stamp) . "pdf/{$this->stamp}_{$this->aid}_0.pdf";
 		} else {
 			throw new Exception("Couldn't generate invoice for {$this->aid} for {$this->stamp} billing cycle.",0);
 		}
