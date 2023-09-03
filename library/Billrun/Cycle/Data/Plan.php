@@ -117,8 +117,10 @@ class Billrun_Cycle_Data_Plan extends Billrun_Cycle_Data_Line {
 	
 	//TODO move this to the account/subscriber lines addition logic and work in batch mode.
 	protected function addTaxationToLine($entry) {
+		Billrun_Factory::log("11111111111{$entry}");
 		$entryWithTax = FALSE;
 		for ($i = 0; $i < 3 && !$entryWithTax; $i++) {//Try 3 times to tax the line.
+			Billrun_Factory::log("222222222222");
 			$taxCalc = Billrun_Calculator::getInstance(array('autoload' => false, 'type' => 'tax'));
 			$entryWithTax = $taxCalc->updateRow($entry);
 			if (!$entryWithTax) {
@@ -126,6 +128,8 @@ class Billrun_Cycle_Data_Plan extends Billrun_Cycle_Data_Line {
 				sleep(1);
 			}
 		}
+
+		Billrun_Factory::log("3333333 {$entryWithTax} 33333");
 		if (!empty($entryWithTax)) {
 			$entry = $entryWithTax;
 		} else {
