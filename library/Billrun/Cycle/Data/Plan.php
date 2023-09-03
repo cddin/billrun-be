@@ -122,7 +122,7 @@ class Billrun_Cycle_Data_Plan extends Billrun_Cycle_Data_Line {
 		for ($i = 0; $i < 3 && !$entryWithTax; $i++) {//Try 3 times to tax the line.
 			Billrun_Factory::log("222222222222");
 			$taxCalc = Billrun_Calculator::getInstance(array('autoload' => false, 'type' => 'tax'));
-			Billrun_Factory::log("4444444444{$$taxCalc}");
+			Billrun_Factory::log("4444444444{$taxCalc}");
 			$entryWithTax = $taxCalc->updateRow($entry);
 			Billrun_Factory::log("555555555");
 			if (!$entryWithTax) {
