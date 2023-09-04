@@ -99,18 +99,13 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$this->servicesColl = Billrun_Factory::db()->servicesCollection();
 		if(!empty($options['is_onetime']) ) {
 			$this->is_onetime =$options['is_onetime'];
-			// $this->export_directory = Billrun_Util::getBillRunSharedFolderPath(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR.'one_time'. DIRECTORY_SEPARATOR . $this->stamp);
-			$this->export_directory = '/shared/container/' . Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp;
+			$this->export_directory = Billrun_Util::getBillRunSharedFolderPath(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR.'one_time'. DIRECTORY_SEPARATOR . $this->stamp);
 		}
 		$this->paths = array(
 			'html' => $this->export_directory . DIRECTORY_SEPARATOR . 'html/',
 			'pdf' => (empty(Billrun_Util::getFieldVal($options['temp_pdf'], FALSE)) ? $this->export_directory : $this->getTempDir($this->stamp)) . DIRECTORY_SEPARATOR . 'pdf/',
 			'tmp' => $this->getTempDir($this->stamp),
 		);
-
-		Billrun_Factory::log("this->export_directory +++++");//
-		Billrun_Factory::log($this->export_directory);//
-		Billrun_Factory::log('/shared/container/' . Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp);//
 
 		$this->tmp_paths = array(
 			'header' => $this->paths['tmp'] . 'tmp_header.html',
@@ -232,8 +227,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                         }
                     if($meetConditions && !$this->is_fake_generation){
                         $relative_path = Billrun_Util::getBillRunSharedFolderPath(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp . DIRECTORY_SEPARATOR . $path);
-                        Billrun_Factory::log("relative_path ============");//
-						Billrun_Factory::log($relative_path);//
+                        
 						$this->paths['pdf'] = $relative_path . "pdf/";
                         $this->paths['html'] = $relative_path . "html/";
                         return $this->paths;
@@ -385,6 +379,11 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                 }
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
+
+		
+
+		Billrun_Factory::log("APPLICATION_PATH ============");//
+		Billrun_Factory::log(APPLICATION_PATH);
 
 		Billrun_Factory::log("path html ============");//
 		Billrun_Factory::log($this->paths['html']);
