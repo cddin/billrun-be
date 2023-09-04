@@ -109,7 +109,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 		Billrun_Factory::log("this->export_directory <<<<<<<<");//
 		Billrun_Factory::log($this->export_directory);//
-		Billrun_Factory::log('/shared/container/' . Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp;//
+		Billrun_Factory::log('/shared/container/' . Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp);//
 
 		$this->tmp_paths = array(
 			'header' => $this->paths['tmp'] . 'tmp_header.html',
