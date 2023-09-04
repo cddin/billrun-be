@@ -99,7 +99,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$this->servicesColl = Billrun_Factory::db()->servicesCollection();
 		if(!empty($options['is_onetime']) ) {
 			$this->is_onetime =$options['is_onetime'];
-			$this->export_directory = Billrun_Util::getBillRunSharedFolderPath(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR.'one_time'. DIRECTORY_SEPARATOR . $this->stamp);
+			$this->export_directory = Billrun_Util::getBillRunSharedFolderPath('/shared/container/' . Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR.'one_time'. DIRECTORY_SEPARATOR . $this->stamp, true);
 		}
 		$this->paths = array(
 			'html' => $this->export_directory . DIRECTORY_SEPARATOR . 'html/',
@@ -112,8 +112,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 						// Billrun_Factory::config()->getConfigValue(static::$type . '.export') 
 
-						Billrun_Factory::log(">>>>>>>>>>>>");//
-						Billrun_Factory::log(Billrun_Factory::config()->getConfigValue(static::$type . '.export') );//
+						Billrun_Factory::log(">>>>>>>>>>>><<<<<<<<");//
+						Billrun_Factory::log(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR.'one_time'. DIRECTORY_SEPARATOR . $this->stamp);//
 
 		$this->tmp_paths = array(
 			'header' => $this->paths['tmp'] . 'tmp_header.html',
