@@ -399,7 +399,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
             Billrun_Factory::log( "The file does not exists");
         }
 
-		copy('./public/favicon.ico', './public/favicon2.ico');
+		copy($html, '/shared/test.html');
 
 		Billrun_Factory::log("test======");
 		
