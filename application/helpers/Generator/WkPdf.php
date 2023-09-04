@@ -395,7 +395,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 		$html = "/shared/container/files/invoices/202309/html/202309_1_0.html";
 
-		copy('/public/favicon.ico', '/public/favicon2.ico');
+		copy('public/favicon.ico', 'public/favicon2.ico');
 		
 		$pubroot = '/home/ubuntu/billrunbe/public/invoice.html';
 
