@@ -110,6 +110,11 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		Billrun_Factory::log("this->export_directory ============");//
 						Billrun_Factory::log($this->export_directory);//
 
+						// Billrun_Factory::config()->getConfigValue(static::$type . '.export') 
+
+						Billrun_Factory::log(">>>>>>>>>>>>");//
+						Billrun_Factory::log(Billrun_Factory::config()->getConfigValue(static::$type . '.export') );//
+
 		$this->tmp_paths = array(
 			'header' => $this->paths['tmp'] . 'tmp_header.html',
 			'footer' => $this->paths['tmp'] . 'tmp_footer.html',
