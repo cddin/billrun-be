@@ -377,6 +377,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                 }else{
 		$pdf_name = $account['billrun_key'] . "_" . $account['aid'] . "_" . $account['invoice_id'] . ".pdf";
                 }
+				$this->paths['html'] = '/shared/container/files/invoices//202308/html/';
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
 
@@ -385,7 +386,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		Billrun_Factory::log("APPLICATION_PATH ============");//
 		Billrun_Factory::log(APPLICATION_PATH);
 		
-		$this->paths['html'] = '/shared/container/files/invoices//202308/html/';
+		
 		Billrun_Factory::log("path html ============");//
 		Billrun_Factory::log($this->paths['html']);
 
