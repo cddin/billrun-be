@@ -380,7 +380,10 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$pdf = $this->paths['pdf'] . $pdf_name;
 
 		Billrun_Factory::log("path html ============");
-		Billrun_Factory::log(paths['html']);
+		Billrun_Factory::log($this->paths['html']);
+
+		Billrun_Factory::log("path pdf ============");
+		Billrun_Factory::log($this->paths['pdf']);
 
 		Billrun_Factory::log("file_name ============");
 		Billrun_Factory::log($file_name);
