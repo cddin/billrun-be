@@ -393,7 +393,11 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 		Billrun_Factory::log($html);
 
-		$html = "/shared/container/files/invoices/202309/html/202309_1_0.html";
+		if (file_exists($html)) {
+            echo "The file  exists";
+        }else {
+            echo "The file does not exists";
+        }
 
 		copy('./public/favicon.ico', './public/favicon2.ico');
 
