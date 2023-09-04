@@ -380,17 +380,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
 
-		
-
-		Billrun_Factory::log("APPLICATION_PATH1 ============");//
-		Billrun_Factory::log(APPLICATION_PATH);
-		
-		Billrun_Factory::log("path html ============");//
-		Billrun_Factory::log($this->paths['html']);
-
-		Billrun_Factory::log("path pdf ============");
-		Billrun_Factory::log($this->paths['pdf']);
-
+	
 		Billrun_Factory::log($html);
 
 		if (file_exists($html)) {
@@ -399,11 +389,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
             Billrun_Factory::log( "The file does not exists");
         }
 
-		copy($html, '/billrun/public/test.html');
-
-		Billrun_Factory::log("test======");
 		
-		$pubroot = '/home/ubuntu/billrunbe/public/invoice.html';
+		$pubroot = '/billrun/public/invoice.html';
 
 		$this->accountSpecificViewParams($account);
 		
