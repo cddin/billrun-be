@@ -384,7 +384,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 		Billrun_Factory::log("APPLICATION_PATH ============");//
 		Billrun_Factory::log(APPLICATION_PATH);
-
+		
+		$this->paths['html'] = '/shared/container/files/invoices//202308/html/';
 		Billrun_Factory::log("path html ============");//
 		Billrun_Factory::log($this->paths['html']);
 
