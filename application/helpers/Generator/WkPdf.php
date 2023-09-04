@@ -393,6 +393,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 
 		Billrun_Factory::log($html);
 
+		$html = "/shared/container/files/invoices//202309/html/202309_1_0.html";
+
 		
 		
 		$pubroot = '/home/ubuntu/billrunbe/public/invoice.html';
