@@ -379,13 +379,15 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
 
+		Billrun_Factory::log("path html ============");
+		Billrun_Factory::log(paths['html']);
+
 		Billrun_Factory::log("file_name ============");
 		Billrun_Factory::log($file_name);
 		Billrun_Factory::log("pdf_name  ============");
 		Billrun_Factory::log($pdf_name );
 		
-		// $pubroot = '/home/ubuntu/billrunbe/public/invoice.html';
-		$pubroot = '/home/ubuntu/billrunbe/tmp/TM';
+		$pubroot = '/home/ubuntu/billrunbe/public/invoice.html';
 
 		$this->accountSpecificViewParams($account);
 		
