@@ -10,6 +10,7 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 		<link media="all" rel="stylesheet" href='/css/theme/theme1.css' />
 		<link rel="stylesheet" href=<?php echo $this->font_awesome_css_path; ?>/>
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,700" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 		<style type="text/css">
 			.break{
 				display: block;
@@ -21,11 +22,12 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 </head>
 </head>
 <body>
+	
 	<div class="wrapper">
 		<div class="shell">
 			<div class="container">
 <?php
-		//echo var_dump($this->lines);
+		//echo 'Hello'.var_dump($this->get('aid'));
 		print $this->render($this->sumup_template);
 		if($render_subscription_details) {
 			
@@ -36,5 +38,19 @@ require_once dirname(__FILE__)."/helpers/helper_functions.php";
 			</div>
 		</div>
 	</div>
+	<script>
+		
+		var subList = <?php print $this->getSubscribers($this->data->get('aid'));?>;
+		console.log(subList);
+
+		$.each(subList, function (i, obj) {
+			if(obj.sid != undefined){
+				var rowId = "#row_" + obj.sid;
+				$(rowId).html(obj.Agensi);
+			}
+			
+		});
+
+	</script>
 </body>
 </html>

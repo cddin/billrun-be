@@ -276,8 +276,18 @@ class Billrun_View_Invoice extends Yaf_View_Simple {
 		}
 		return $retMsgs;
 	}
+
+	public function getSubscribers($accid) {
+		$subHandler = Billrun_Factory::db()->{'subscribersCollection'}();
+		
+		$p = array('aid' => $accid);
+		$subcollection = $subHandler->find($p);
+		$records = array_values(iterator_to_array($subcollection));
+		return json_encode($records);
+	}
 	
 	public function createSubscriberInvoiceTables($lines, $flatTypes = [], $usageTypes = [], $details_keys = []) {
+
 		$config = Billrun_Factory::config();
 		$invoice_display = $config->getInvoiceDisplayConfig();
 		$lines = array_filter($lines, function($line) {
