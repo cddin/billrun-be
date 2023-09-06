@@ -1,3 +1,4 @@
+
 <?php foreach ($data->get('subs') as $index => $sub) { 
 	if(empty($sub['sid']) && (empty($sub['totals']['after_vat']) || $this->hide_account_subscriber)) { continue; }
 ?>
@@ -26,13 +27,15 @@
 		</div><!-- /.section .section-invoice-head -->
 
 		<div class="section section-invoice-base">
+		<h2 id="row_<?php echo $sub['sid']; ?>" style="font-weight:700">Agensi</h2>
 		<h2><?php echo Generator_Translations::stranslate('DEF_INV_SUBSCRIBER_NO');?><?php echo ($index + 1); ?>:</h2>
 		<h1><?php echo $sub['firstname'] . ' ' . $sub['lastname']; ?></h1>
+		
 		<p class="label"><?php echo (!empty($sub['desc']) ? $sub['desc'] : ''); ?></p>
 		</div><!-- /.section .section-invoice-base -->
-
+		
 		<div class="section section-invoice-details">
-			<div class="section-head">
+			<div class="section-head">							
 				<h2 class="section-title"><?php echo Generator_Translations::stranslate('DEF_INV_SUBSCRIBER_SUMMARY');?></h2><!-- /.section-title -->
 			</div><!-- /.section-head -->
 
@@ -82,6 +85,7 @@
 				<?php 
 					$sidLines = array_filter($this->lines,function ($l) use ($sub) {return $l['sid'] == $sub['sid'];});
 					$subFlatTabels = !empty($this->invoice_flat_tabels[$sub['sid']]) ? $this->invoice_flat_tabels[$sub['sid']] : [];
+					//var_dump($this->lines);
 					if(!empty($sidLines)) {
 						echo $this->render($this->details_table_template,array('lines'=> $sidLines,'lines_detail_types' => $flat_line_types, 'tabels' => $subFlatTabels )); 
 					}
@@ -93,7 +97,6 @@
 			<div class="section-head">
 				<h2 class="section-title"><?php echo Generator_Translations::stranslate('DEF_INV_USAGE_DETAILS');?></h2><!-- /.section-title -->
 			</div><!-- /.section-head -->
-
 			<div class="section-body">
 				<?php 
 						if(!empty($sidLines)) {

@@ -8,6 +8,7 @@
 
 require_once APPLICATION_PATH . '/application/controllers/Action/Api.php';
 
+
 class AccountInvoicesAction extends ApiAction {
 	use Billrun_Traits_Api_UserPermissions;
 	
@@ -70,28 +71,7 @@ class AccountInvoicesAction extends ApiAction {
 	}
 
 	public function downloadPDF($request) {
-
-		$params = $request->getRequest();
-		$options = array(
-			'type' => 'expectedinvoice',
-			'aid' => $params['aid'],
-			'stamp' => $params['billrun_key'],
-		);
-		if (!empty($params['invoicing_day'])) {
-			$options['invoicing_day'] = $params['invoicing_day'];
-		}
-		$generator = Billrun_Generator::getInstance($options);
-		
-		$generator->load();
-
-		$pdfPath = $generator->generate();
-		
-		//$cont = file_get_contents($pdfPath);
-
-		$this->redirect('/invoice.html');
-		die;
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		
+	
 		if ($request instanceof Yaf_Request_Abstract) {
 			$aid = $request->get('aid');
 			$confirmedOnly = $request->get('confirmed_only');
@@ -133,21 +113,29 @@ class AccountInvoicesAction extends ApiAction {
 			$generator->load();
 			$generator->generate();
 		}
-		if (!file_exists($pdf)){
-                        Billrun_Factory::log('Invoice file ' . $pdf . ' does not exist', Zend_Log::NOTICE);
-			echo "Invoice not found";
-		} else {
-			$cont = file_get_contents($pdf);
-			if ($cont) {
-				header('Content-disposition: inline; filename="'.$file_name.'"');
-				header('Cache-Control: public, must-revalidate, max-age=0');
-				header('Pragma: public');
-				header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-				header('Content-Type: application/pdf');
-				Billrun_Factory::log('Transfering invoice content from : '.$pdf .' to http connection');
-				echo $cont;
-			} 
-		}
+
+		//if (!file_exists($pdf)){
+                        //Billrun_Factory::log('Invoice file ' . $pdf . ' does not exist', Zend_Log::NOTICE);
+			//echo "Invoice not found";
+		//} else {
+			//$cont = file_get_contents($pdf);
+			//if ($cont) {
+				//header('Content-disposition: inline; filename="'.$file_name.'"');
+				//header('Cache-Control: public, must-revalidate, max-age=0');
+				//header('Pragma: public');
+				//header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+				//header('Content-Type: application/pdf');
+				//Billrun_Factory::log('Transfering invoice content from : '.$pdf .' to http connection');
+				//echo $cont;
+			//} 
+		//}
+
+		$srchtml = str_replace("pdf","html",$pdf);
+		$pubroot = '/var/www/billrun/public/invoice.html';
+		copy($srchtml, $pubroot);
+
+		$this->redirect('/invoice.html');
+
 		die();
 	}
 	

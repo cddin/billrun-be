@@ -227,8 +227,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                         }
                     if($meetConditions && !$this->is_fake_generation){
                         $relative_path = Billrun_Util::getBillRunSharedFolderPath(Billrun_Factory::config()->getConfigValue(static::$type . '.export') . DIRECTORY_SEPARATOR . $this->stamp . DIRECTORY_SEPARATOR . $path);
-                        
-						$this->paths['pdf'] = $relative_path . "pdf/";
+                        $this->paths['pdf'] = $relative_path . "pdf/";
                         $this->paths['html'] = $relative_path . "html/";
                         return $this->paths;
                     }
@@ -379,18 +378,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
                 }
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
-
-	
-		Billrun_Factory::log($html);
-
-		if (file_exists($html)) {
-            Billrun_Factory::log( "The file  exists");
-        }else {
-            Billrun_Factory::log( "The file does not exists");
-        }
-
 		
-		$pubroot = '/billrun/public/invoice.html';
+		$pubroot = '/var/www/billrun/public/invoice.html';
 
 		$this->accountSpecificViewParams($account);
 		
@@ -408,8 +397,8 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$this->updateHtmlDynamicData($account);
 		$ExporterFlagsString = Billrun_Factory::config()->getConfigValue(static::$type.'.exporter_flags','-R 0.1 -L 0 --print-media-type');		
 
-		//Billrun_Factory::log($this->wkpdf_exec);
-		//exec($this->wkpdf_exec . " {$ExporterFlagsString} --header-html {$this->tmp_paths['header']} --footer-html {$this->tmp_paths['footer']} {$html} {$pdf}");
+		Billrun_Factory::log($this->wkpdf_exec);
+		exec($this->wkpdf_exec . " {$ExporterFlagsString} --header-html {$this->tmp_paths['header']} --footer-html {$this->tmp_paths['footer']} {$html} {$pdf}");
 
 		if (Billrun_Factory::config()->getConfigValue(self::$type . '.exclude_pages')) {
 			$firstPage = $this->view_path . 'first_page/main.phtml';
