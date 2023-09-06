@@ -379,7 +379,7 @@ class Generator_WkPdf extends Billrun_Generator_Pdf {
 		$html = $this->paths['html'] . $file_name;
 		$pdf = $this->paths['pdf'] . $pdf_name;
 		
-		$pubroot = '/var/www/billrun/public/invoice.html';
+		$pubroot = '/billrun/public/invoice.html';
 
 		$this->accountSpecificViewParams($account);
 		

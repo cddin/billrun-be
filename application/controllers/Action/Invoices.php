@@ -131,7 +131,7 @@ class AccountInvoicesAction extends ApiAction {
 		//}
 
 		$srchtml = str_replace("pdf","html",$pdf);
-		$pubroot = '/var/www/billrun/public/invoice.html';
+		$pubroot = '/billrun/public/invoice.html';
 		copy($srchtml, $pubroot);
 
 		$this->redirect('/invoice.html');
